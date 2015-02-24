@@ -16,10 +16,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var method = expression.slice(0, index);
       var args = expression.slice(index + 1, -1).replace(/ /g, '').split(',');
       //console.log('%c on [%s] compute [%s] via [%s]', 'color: green', args[0], name, method);
-      this.addPropertyEffect(model, args[0], 'compute', {
-        property: name,
-        method: method
-      });
+      args.forEach(function (dependency) {
+        this.addPropertyEffect(model, dependency, 'compute', {
+          property: name,
+          method: method
+        });
+      }, this);
     };
 
     // TODO(sjmiles): case shenanigans
